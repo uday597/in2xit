@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739820347692",
+    "project_id": "push-notification-servic-604fa",
+    "storage_bucket": "push-notification-servic-604fa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739820347692:android:781b735e40f37468c60c89",
+        "android_client_info": {
+          "package_name": "com.example.my_gate_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQNUzxCTmh16HMfMi7dsb1rTy4RDluCR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
