@@ -293,7 +293,7 @@ class _SocietyScreenState extends State<SocietyScreen> {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Society Created Successfully!"),
+                      content: Text("College Created Successfully!"),
                     ),
                   );
 
@@ -303,7 +303,7 @@ class _SocietyScreenState extends State<SocietyScreen> {
         child: isLoading
             ? const CircularProgressIndicator(color: Colors.white)
             : const Text(
-                "Create Society",
+                "Create College",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
