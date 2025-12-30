@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:my_gate_clone/features/members/providers/guest.dart';
+import 'package:my_gate_clone/features/owner/provider/student.dart';
 import 'package:my_gate_clone/features/security_guard/screens/guestdetails.dart';
+import 'package:my_gate_clone/features/security_guard/screens/studentdetails.dart';
 import 'package:provider/provider.dart';
 
 class GuardQRScannerScreen extends StatefulWidget {
@@ -14,6 +16,7 @@ class GuardQRScannerScreen extends StatefulWidget {
 class _GuardQRScannerScreenState extends State<GuardQRScannerScreen> {
   final MobileScannerController controller = MobileScannerController();
   bool isProcessing = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -21,10 +24,83 @@ class _GuardQRScannerScreenState extends State<GuardQRScannerScreen> {
     controller.dispose();
   }
 
+  void _handleQRCode(String qr) async {
+    if (isProcessing) return;
+    isProcessing = true;
+
+    try {
+      // Check if QR is for student or guest
+      if (qr.startsWith("student|id:")) {
+        // Student QR code
+        final studentProvider = Provider.of<StudentProvider>(
+          context,
+          listen: false,
+        );
+        final student = await studentProvider.fetchStudentByQR(qr);
+
+        if (!mounted) return;
+
+        if (student != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => StudentDetailForGuard(studentData: student),
+            ),
+          ).then((value) {
+            isProcessing = false;
+            controller.start();
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Invalid student QR code")),
+          );
+          isProcessing = false;
+        }
+      } else if (qr.startsWith("guest|req:")) {
+        // Guest QR code - existing logic
+        final guestProvider = Provider.of<RequestProvider>(
+          context,
+          listen: false,
+        );
+        final data = await guestProvider.fetchRequestByQR(qr);
+
+        if (!mounted) return;
+
+        if (data != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) =>
+                  GuestRequestDetailForGuard(requestData: data.toMap()),
+            ),
+          ).then((value) {
+            isProcessing = false;
+            controller.start();
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Invalid guest QR code")),
+          );
+          isProcessing = false;
+        }
+      } else {
+        // Invalid QR format
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Invalid QR code format")));
+        isProcessing = false;
+      }
+    } catch (e) {
+      debugPrint("QR Processing Error: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Error processing QR code")));
+      isProcessing = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<RequestProvider>(context, listen: false);
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -34,32 +110,11 @@ class _GuardQRScannerScreenState extends State<GuardQRScannerScreen> {
             controller: controller,
             onDetect: (capture) async {
               if (isProcessing) return;
-              isProcessing = true;
-
               final barcode = capture.barcodes.first;
               final String? qr = barcode.rawValue;
 
               if (qr != null) {
-                final data = await provider.fetchRequestByQR(qr);
-                if (data != null) {
-                  if (!mounted) return;
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          GuestRequestDetailForGuard(requestData: data.toMap()),
-                    ),
-                  ).then((value) {
-                    isProcessing = false;
-                    controller.start();
-                  });
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Invalid QR code")),
-                  );
-                  isProcessing = false;
-                }
+                _handleQRCode(qr);
               } else {
                 isProcessing = false;
               }

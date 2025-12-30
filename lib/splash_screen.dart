@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "SmartDwaar",
+              "In2xIt",
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.w900,
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 10),
 
             const Text(
-              "Society Security System",
+              "College Security System",
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.white,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_gate_clone/features/admin/modal/society.dart';
 import 'package:my_gate_clone/features/owner/screens/add_members.dart';
 import 'package:my_gate_clone/features/owner/screens/add_securityGuard.dart';
+import 'package:my_gate_clone/features/owner/screens/add_students.dart';
+import 'package:my_gate_clone/features/owner/screens/all_students.dart';
 import 'package:my_gate_clone/features/owner/screens/complaints.dart';
 import 'package:my_gate_clone/features/owner/screens/emergancy_alert.dart';
 import 'package:my_gate_clone/features/owner/screens/guard_list.dart';
@@ -47,8 +49,8 @@ class _OwnerHomepageState extends State<OwnerHomepage> {
       {
         'title': 'Add Students',
         'icon': Icons.badge,
-        'screen': AddSecurityGuard(societyId: widget.owner.id),
-        'color': const Color(0xFF48BB78),
+        'screen': AddStudents(collegeId: widget.owner.id),
+        'color': const Color.fromARGB(255, 200, 7, 142),
         'navType': navType.push,
       },
       {
@@ -76,6 +78,13 @@ class _OwnerHomepageState extends State<OwnerHomepage> {
         'title': 'View Members',
         'icon': Icons.group,
         'screen': MembersListScreen(societyId: widget.owner.id),
+        'color': const Color(0xFF4299E1),
+        'navType': navType.push,
+      },
+      {
+        'title': 'All Students',
+        'icon': Icons.group,
+        'screen': AllStudents(collegeId: widget.owner.id),
         'color': const Color(0xFF4299E1),
         'navType': navType.push,
       },

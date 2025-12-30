@@ -393,7 +393,7 @@ class _SocietyDetailsScreenState extends State<SocietyDetailsScreen> {
       await provider.updateSociety(widget.society.id, updatedSociety);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Society Updated Successfully!")),
+        const SnackBar(content: Text("College Updated Successfully!")),
       );
 
       setState(() {
@@ -413,7 +413,7 @@ class _SocietyDetailsScreenState extends State<SocietyDetailsScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text("Confirm Delete"),
-        content: const Text("Are you sure you want to delete this society?"),
+        content: const Text("Are you sure you want to delete this college?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
@@ -435,7 +435,7 @@ class _SocietyDetailsScreenState extends State<SocietyDetailsScreen> {
         await provider.deleteSociety(widget.society.id);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Society Deleted Successfully!")),
+          const SnackBar(content: Text("College Deleted Successfully!")),
         );
 
         Navigator.pop(context); // go back

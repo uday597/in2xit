@@ -17,6 +17,7 @@ import 'package:my_gate_clone/features/owner/provider/members_provider.dart';
 import 'package:my_gate_clone/features/owner/provider/notice.dart';
 import 'package:my_gate_clone/features/owner/provider/security_guard.dart';
 import 'package:my_gate_clone/features/owner/provider/service_provider.dart';
+import 'package:my_gate_clone/features/owner/provider/student.dart';
 import 'package:my_gate_clone/features/security_guard/providers/login.dart';
 import 'package:my_gate_clone/features/security_guard/providers/visitor.dart';
 import 'package:my_gate_clone/firebase_options.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => StudentProvider()),
         ChangeNotifierProvider(create: (_) => EmergencyAlertsProvider()),
         ChangeNotifierProvider(create: (_) => PaymentProvider()),
         ChangeNotifierProvider(create: (_) => ComplaintsProvider()),

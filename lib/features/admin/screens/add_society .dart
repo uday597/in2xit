@@ -177,7 +177,7 @@ class _SocietyScreenState extends State<SocietyScreen> {
           buildTextField(
             controller: collegeNameCrtl,
             label: 'College Name',
-            validator: (v) => v!.isEmpty ? "Enter society name" : null,
+            validator: (v) => v!.isEmpty ? "Enter College name" : null,
           ),
           buildTextField(
             controller: collegePasswordCrtl,
